@@ -61,6 +61,7 @@ def sendEmail(to, content):
     server.sendmail("yourmail@gmail.com", to, content)
     server.close()
 
+
 # def createList():
 #     while True:
 
@@ -72,19 +73,21 @@ def sendEmail(to, content):
 #         else:
 #             print("Cannot rcognize your voice")
 
+
 def addIn(item):
     with open("to_do_list.txt", "a") as file:
         file.write(item + "\n")
 
+
 def printToDoList():
     try:
-        with open("to_do_list.txt","r") as file:
+        with open("to_do_list.txt", "r") as file:
             print("Your to-do list:")
             for line in file:
                 print(line.strip())
 
     except FileNotFoundError:
-        speak("There is some error.Icannot file your file.")
+        speak("There is some error.I cannot file your file.")
         print("Error:File not found!")
 
 
@@ -95,6 +98,18 @@ while True:
         query = takeCommand().lower()
 
         # logics to execute task based on query
+
+        sites = [
+            ["youtube", "https://www.youtube.com"],
+            ["google", "https://www.google.com"],
+            ["whatsapp", "https://web.whatsapp.com"],
+            ["youtube music", "https://www.youtubemusic.com"],
+        ]
+        for site in sites:
+            if f"open {site[0]}".lower() in query.lower():
+                speak(f"Opening {site[0]} maam...")
+                webbrowser.open(site[1])
+
         if "wikipedia" in query:
             speak("Searching Wikipedia...")
             query = query.replace("wikipedia", "")
@@ -103,25 +118,11 @@ while True:
             print(results)
             speak(results)
 
-        elif "youtube" in query:
-            webbrowser.open("youtube.com")
-            speak("Ok ma'am Opening youtube")
-            print("opening youtube")
-
-        elif "open google" in query:
-            webbrowser.open("google.com")
-
-        elif "open whatsapp" in query:
-            webbrowser.open("https://web.whatsapp.com/")
-
-        elif "open brave" in query:
-            webbrowser.open("brave.com")
-
         elif "play music" in query:
             speak("which website would yoy prefer to listen music?")
             if "youtube music" in query:
                 webbrowser.open("youtubemusic.com")
-            else:
+            elif "music folder" in query:
                 music_dir = "C:\\Users\\Admin\\Music"
                 songs = os.listdir(music_dir)
                 print(songs)
@@ -129,7 +130,7 @@ while True:
 
         elif "the time" in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
-            speak(f"Maam, The time is {strTime}")
+            speak(f"hey, the time is {strTime}")
 
         elif "open VS code" in query:
             codepath = "C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
@@ -137,7 +138,7 @@ while True:
 
         elif "email to " in query:
             try:
-                speak("What shouls i say...")
+                speak("What should I say...")
                 content = takeCommand()
                 to = "Shrutikaag01@gmail.com"
                 sendEmail(to, content)
@@ -163,7 +164,7 @@ while True:
                 speak("Sorry your voice is not recognizable")
 
         elif "stop" in query:
-            speak("Sure! Goodbye.I hope it was helpful")
+            speak("Sure! Goodbye I hope it was helpful")
             break
 
         elif "please quit" in query or "exit" in query:
